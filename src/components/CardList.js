@@ -1,28 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Ticket from "./Ticket";
+import Card from "./Card";
 
-function TicketList(props){
+function CardList(props){
   return (
-    <React.Fragment>
-      <hr/>
-      {Object.values(props.ticketList).map((ticket) => {
-        return <Ticket
-          whenTicketClicked = { props.onTicketSelection }
-          names={ticket.names}
-          location={ticket.location}
-          issue={ticket.issue}
-          formattedWaitTime={ticket.formattedWaitTime}
-          id={ticket.id}
-          key={ticket.id}/>
+    <>
+
+      {Object.values(props.cardList).map((card) => {
+        return <Card
+          whenCardClicked = { props.onCardSelection }
+          term={card.term}
+          id={card.id}
+          key={card.id}/>
       })}
-    </React.Fragment>
+    </>
   );
 }
 
-TicketList.propTypes = {
-  ticketList: PropTypes.object,
-  onTicketSelection: PropTypes.func
+CardList.propTypes = {
+  cardList: PropTypes.object,
+  onCardSelection: PropTypes.func
 };
 
-export default TicketList;
+export default CardList;

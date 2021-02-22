@@ -1,4 +1,3 @@
-export const ADD_TICKET = 'ADD_TICKET';
-export const DELETE_TICKET = 'DELETE_TICKET';
+export const ADD_CARD = 'ADD_CARD';
+export const DELETE_CARD = 'DELETE_CARD';
 export const TOGGLE_FORM = 'TOGGLE_FORM';
-export const UPDATE_TIME = 'UPDATE_TIME';

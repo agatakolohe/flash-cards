@@ -1,46 +1,26 @@
 import React from 'react';
-import NewTicketForm from './NewCardForm';
-import TicketList from './TicketList';
-import TicketDetail from './TicketDetail';
-import EditTicketForm from './EditCardForm';
+import NewCardForm from './NewCardForm';
+import CardList from './CardList';
+import CardDetail from './CardDetail';
+import EditCardForm from './EditCardForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import * as a from '../actions';
 
-class TicketControl extends React.Component {
+class CardControl extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedTicket: null,
+      selectedCard: null,
       editing: false
     };
   }
 
-  componentDidMount() {
-    this.waitTimeUpdateTimer = setInterval(() =>
-      this.updateTicketElapsedWaitTime(),
-    60000
-    );
-  }
-
-  componentWillUnmount(){
-    clearInterval(this.waitTimeUpdateTimer);
-  }
-
-  updateTicketElapsedWaitTime = () => {
-    const { dispatch } = this.props;
-    Object.values(this.props.masterTicketList).forEach(ticket => {
-      const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
-      const action = a.updateTime(ticket.id, newFormattedWaitTime);
-      dispatch(action);
-    });
-  }
-
   handleClick = () => {
-    if (this.state.selectedTicket != null) {
+    if (this.state.selectedCard != null) {
       this.setState({
-        selectedTicket: null,
+        selectedCard: null,
         editing: false
       });
     } else {
@@ -50,59 +30,59 @@ class TicketControl extends React.Component {
     }
   }
 
-  handleAddingNewTicketToList = (newTicket) => {
+  handleAddingNewCardToList = (newCard) => {
     const { dispatch } = this.props;
-    const action = a.addTicket(newTicket)
+    const action = a.addCard(newCard)
     dispatch(action);
     const action2 = a.toggleForm();
     dispatch(action2);
   }
 
-  handleChangingSelectedTicket = (id) => {
-    const selectedTicket = this.props.masterTicketList[id];
-    this.setState({selectedTicket: selectedTicket});
+  handleChangingSelectedCard = (id) => {
+    const selectedCard = this.props.masterCardList[id];
+    this.setState({selectedCard: selectedCard});
   }
 
   handleEditClick = () => {
     this.setState({editing: true});
   }
 
-  handleEditingTicketInList = (ticketToEdit) => {
+  handleEditingCardInList = (cardToEdit) => {
     const { dispatch } = this.props;
-    const action = a.addTicket(ticketToEdit);
+    const action = a.addCard(cardToEdit);
     dispatch(action);
     this.setState({
       editing: false,
-      selectedTicket: null
+      selectedCard: null
     });
   }
 
-  handleDeletingTicket = (id) => {
+  handleDeletingCard = (id) => {
     const { dispatch } = this.props;
-    const action = a.deleteTicket(id);
+    const action = a.deleteCard(id);
     dispatch(action);
-    this.setState({selectedTicket: null});
+    this.setState({selectedCard: null});
   }
 
   render(){
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.editing ) {      
-      currentlyVisibleState = <EditTicketForm ticket = {this.state.selectedTicket} onEditTicket = {this.handleEditingTicketInList} />
-      buttonText = "Return to Ticket List";
-    } else if (this.state.selectedTicket != null) {
-      currentlyVisibleState = 
-      <TicketDetail 
-        ticket = {this.state.selectedTicket} 
-        onClickingDelete = {this.handleDeletingTicket} 
+    if (this.state.editing ) {
+      currentlyVisibleState = <EditCardForm card = {this.state.selectedCard} onEditCard = {this.handleEditingCardInList} />
+      buttonText = "Return to Card List";
+    } else if (this.state.selectedCard != null) {
+      currentlyVisibleState =
+      <CardDetail
+        card = {this.state.selectedCard}
+        onClickingDelete = {this.handleDeletingCard}
         onClickingEdit = {this.handleEditClick} />
-      buttonText = "Return to Ticket List";
+      buttonText = "Return to Card List";
     } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}  />;
-      buttonText = "Return to Ticket List";
+      currentlyVisibleState = <NewCardForm onNewCardCreation={this.handleAddingNewCardToList}  />;
+      buttonText = "Return to Card List";
     } else {
-      currentlyVisibleState = <TicketList ticketList={this.props.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />;
-      buttonText = "Add Ticket";
+      currentlyVisibleState = <CardList cardList={this.props.masterCardList} onCardSelection={this.handleChangingSelectedCard} />;
+      buttonText = "Add Card";
     }
     return (
       <React.Fragment>
@@ -114,17 +94,17 @@ class TicketControl extends React.Component {
 
 }
 
-TicketControl.propTypes = {
-  masterTicketList: PropTypes.object
+CardControl.propTypes = {
+  masterCardList: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    masterTicketList: state.masterTicketList,
+    masterCardList: state.masterCardList,
     formVisibleOnPage: state.formVisibleOnPage
   }
 }
 
-TicketControl = connect(mapStateToProps)(TicketControl);
+CardControl = connect(mapStateToProps)(CardControl);
 
-export default TicketControl;
+export default CardControl;

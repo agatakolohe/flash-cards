@@ -2,33 +2,29 @@ import React from "react";
 import { v4 } from 'uuid';
 import PropTypes from "prop-types";
 import ReusableForm from "./ReusableForm";
-import Moment from 'moment';
 
-function NewTicketForm(props){
+function NewCardForm(props){
 
-  function handleNewTicketFormSubmission(event) {
+  function handleNewCardFormSubmission(event) {
     event.preventDefault();
-    props.onNewTicketCreation({
-      names: event.target.names.value,
-      location: event.target.location.value,
-      issue: event.target.issue.value,
-      id: v4(),
-      timeOpen: new Moment(),
-      formattedWaitTime: new Moment().fromNow(true)
+    props.onNewCardCreation({
+      term: event.target.term.value,
+      definition: event.target.definition.value,
+      id: v4()
     });
   }
 
   return (
     <React.Fragment>
-      <ReusableForm 
-        formSubmissionHandler={handleNewTicketFormSubmission}
-        buttonText="Help!" />
+      <ReusableForm
+        formSubmissionHandler={handleNewCardFormSubmission}
+        buttonText="Create Card" />
     </React.Fragment>
   );
 }
 
-NewTicketForm.propTypes = {
-  onNewTicketCreation: PropTypes.func
+NewCardForm.propTypes = {
+  onNewCardCreation: PropTypes.func
 };
 
-export default NewTicketForm;
+export default NewCardForm;

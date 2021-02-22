@@ -2,25 +2,28 @@ import React from "react";
 import ReusableForm from "./ReusableForm";
 import PropTypes from "prop-types";
 
-function EditTicketForm (props) {
-  const { ticket } = props;
+function EditCardForm (props) {
+  const { card } = props;
 
-  function handleEditTicketFormSubmission(event) {
+  function handleEditCardFormSubmission(event) {
     event.preventDefault();
-    props.onEditTicket({names: event.target.names.value, location: event.target.location.value, issue: event.target.issue.value, timeOpen: ticket.timeOpen, formattedWaitTime: ticket.formattedWaitTime, id: ticket.id});
+    props.onEditCard({
+      term: event.target.term.value,
+      definition: event.target.definition.value,
+      id: card.id});
   }
 
   return (
     <React.Fragment>
-      <ReusableForm 
-        formSubmissionHandler={handleEditTicketFormSubmission}
-        buttonText="Update Ticket" />
+      <ReusableForm
+        formSubmissionHandler={handleEditCardFormSubmission}
+        buttonText="Update Card" />
     </React.Fragment>
   );
 }
 
-EditTicketForm.propTypes = {
-  onEditTicket: PropTypes.func
+EditCardForm.propTypes = {
+  onEditCard: PropTypes.func
 };
 
-export default EditTicketForm;
+export default EditCardForm;

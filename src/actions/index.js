@@ -1,7 +1,7 @@
 import * as c from './ActionTypes';
 
-export const deleteTicket = id => ({
-  type: c.DELETE_TICKET,
+export const deleteCard = id => ({
+  type: c.DELETE_CARD,
   id
 });
 
@@ -9,21 +9,12 @@ export const toggleForm = () => ({
   type: c.TOGGLE_FORM
 });
 
-export const addTicket = (ticket) => {
-  const { names, location, issue, id, formattedWaitTime, timeOpen } = ticket;
+export const addCard = (card) => {
+  const { term, definition, id, } = card;
   return {
-    type: c.ADD_TICKET,
-    names: names,
-    location: location,
-    issue: issue,
-    id: id,
-    formattedWaitTime,
-    timeOpen: timeOpen
+    type: c.ADD_CARD,
+    term: term,
+    definition: definition,
+    id: id
   }
 }
-
-export const updateTime = (id, formattedWaitTime) => ({
-  type: c.UPDATE_TIME,
-  id: id,
-  formattedWaitTime: formattedWaitTime
-});

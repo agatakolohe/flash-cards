@@ -1,26 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Ticket(props){
+function Card(props){
   return (
     <React.Fragment>
-      <div onClick = {() => props.whenTicketClicked(props.id)}>
-        <h3>{props.location} - {props.names}</h3>
-        <p><em>{props.issue}</em></p>
-        <p><em>{props.formattedWaitTime}</em></p>
+      <div onClick = {() => props.whenCardClicked(props.id)}>
+        <h1>{props.term}</h1>
+        <h3>{props.definition}</h3>
       </div>
       <hr/>
     </React.Fragment>
   );
 }
 
-Ticket.propTypes = {
-  names: PropTypes.string,
-  location: PropTypes.string,
-  issue: PropTypes.string,
+Card.propTypes = {
+  term: PropTypes.string,
+  definition: PropTypes.string,
   id: PropTypes.string,
-  formattedWaitTime: PropTypes.string,
-  whenTicketClicked: PropTypes.func
+  whenCardClicked: PropTypes.func
 };
 
-export default Ticket;
+export default Card;

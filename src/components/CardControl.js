@@ -59,9 +59,7 @@ class CardControl extends React.Component {
   }
 
   handleDeletingCard = (id) => {
-    const { dispatch } = this.props;
-    const action = a.deleteCard(id);
-    dispatch(action);
+    this.props.firestore.delete({collection: "cards", doc: id });
     this.setState({selectedCard: null});
   }
 

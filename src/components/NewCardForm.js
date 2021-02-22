@@ -1,23 +1,26 @@
 import React from "react";
-import { v4 } from 'uuid';
+// import { v4 } from 'uuid';
 import PropTypes from "prop-types";
 import ReusableForm from "./ReusableForm";
+import { useFirestore } from "react-redux-firebase";
 
 function NewCardForm(props){
+  const firestore = useFirestore();
 
-  function handleNewCardFormSubmission(event) {
+  function addCardToFirestore(event) {
     event.preventDefault();
-    props.onNewCardCreation({
+    props.onNewCardCreation();
+
+    return firestore.collection("cards").add({
       term: event.target.term.value,
-      definition: event.target.definition.value,
-      id: v4()
+      definition: event.target.definition.value
     });
   }
 
   return (
     <React.Fragment>
       <ReusableForm
-        formSubmissionHandler={handleNewCardFormSubmission}
+        formSubmissionHandler={addCardToFirestore}
         buttonText="Create Card" />
     </React.Fragment>
   );

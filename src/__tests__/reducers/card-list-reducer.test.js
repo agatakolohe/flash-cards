@@ -24,22 +24,22 @@ describe('cardListReducer', () => {
     expect(cardListReducer({}, { type: null })).toEqual({});
   });
 
-  test('Should successfully add new card data to masterCardList', () => {
-    const { term, definition, id } = cardData;
-    action = {
-      type: c.ADD_CARD,
-      term: term,
-      definition: definition,
-      id: id
-    };
-    expect(cardListReducer({}, action)).toEqual({
-      [id] : {
-        term: term,
-        definition: definition,
-        id: id
-      }
-    });
-  });
+  // test('Should successfully add new card data to masterCardList', () => {
+  //   const { term, definition, id } = cardData;
+  //   action = {
+  //     type: c.ADD_CARD,
+  //     term: term,
+  //     definition: definition,
+  //     id: id
+  //   };
+  //   expect(cardListReducer({}, action)).toEqual({
+  //     [id] : {
+  //       term: term,
+  //       definition: definition,
+  //       id: id
+  //     }
+  //   });
+  // });
 
   test('Should successfully delete a card', () => {
     action = {

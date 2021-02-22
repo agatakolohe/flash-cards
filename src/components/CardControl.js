@@ -4,8 +4,8 @@ import CardList from './CardList';
 import CardDetail from './CardDetail';
 import EditCardForm from './EditCardForm';
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
 import * as a from '../actions';
+import { withFirestore } from "react-redux-firebase";
 
 class CardControl extends React.Component {
 
@@ -30,27 +30,28 @@ class CardControl extends React.Component {
     }
   }
 
-  handleAddingNewCardToList = (newCard) => {
+  handleAddingNewCardToList = () => {
     const { dispatch } = this.props;
-    const action = a.addCard(newCard)
-    dispatch(action);
     const action2 = a.toggleForm();
     dispatch(action2);
   }
 
   handleChangingSelectedCard = (id) => {
-    const selectedCard = this.props.masterCardList[id];
-    this.setState({selectedCard: selectedCard});
+    this.props.firestore.get({collection: "cards", doc: id}).then((card) => {
+      const firestoreCard = {
+        term: card.get("term"),
+        definition: card.get("definition"),
+        id: card.id
+      }
+      this.setState({selectedCard: firestoreCard})
+    });
   }
 
   handleEditClick = () => {
     this.setState({editing: true});
   }
 
-  handleEditingCardInList = (cardToEdit) => {
-    const { dispatch } = this.props;
-    const action = a.addCard(cardToEdit);
-    dispatch(action);
+  handleEditingCardInList = () => {
     this.setState({
       editing: false,
       selectedCard: null
@@ -94,17 +95,12 @@ class CardControl extends React.Component {
 
 }
 
-CardControl.propTypes = {
-  masterCardList: PropTypes.object
-};
-
 const mapStateToProps = state => {
   return {
-    masterCardList: state.masterCardList,
     formVisibleOnPage: state.formVisibleOnPage
   }
 }
 
 CardControl = connect(mapStateToProps)(CardControl);
 
-export default CardControl;
+export default withFirestore(CardControl);

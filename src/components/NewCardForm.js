@@ -3,19 +3,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReusableForm from "./ReusableForm";
 import { useFirestore } from "react-redux-firebase";
-// import firebase from "firebase/app";
+import firebase from "firebase/app";
 
-function NewCardForm(props){
+function NewCardForm(props) {
   const firestore = useFirestore();
 
   function addCardToFirestore(event) {
     event.preventDefault();
     props.onNewCardCreation();
 
-    // const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
     return firestore.collection("cards").add({
       term: event.target.term.value,
-      definition: event.target.definition.value
+      definition: event.target.definition.value,
+      userId: user.uid,
     });
   }
 
@@ -23,13 +24,14 @@ function NewCardForm(props){
     <React.Fragment>
       <ReusableForm
         formSubmissionHandler={addCardToFirestore}
-        buttonText="Create Card" />
+        buttonText="Create Card"
+      />
     </React.Fragment>
   );
 }
 
 NewCardForm.propTypes = {
-  onNewCardCreation: PropTypes.func
+  onNewCardCreation: PropTypes.func,
 };
 
 export default NewCardForm;

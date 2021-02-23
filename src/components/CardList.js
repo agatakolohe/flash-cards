@@ -1,25 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Card from "./Card";
-import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useSelector } from "react-redux";
+import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
+import firebase from "firebase/app";
 
-function CardList(props){
-  useFirestoreConnect([
-    { collection: 'cards' }
-  ]);
+function CardList(props) {
+  useFirestoreConnect([{ collection: "cards" }]);
 
-  const cards = useSelector(state => state.firestore.ordered.cards);
+  const cards = useSelector((state) => state.firestore.ordered.cards);
+  const user = firebase.auth().currentUser;
 
-  if (isLoaded(cards)){
+  if (isLoaded(cards)) {
     return (
       <>
         {cards.map((card) => {
-          return <Card
-            whenCardClicked = { props.onCardSelection }
-            term={card.term}
-            id={card.id}
-            key={card.id}/>
+          if (card.userId === user.uid) {
+            return (
+              <Card
+                whenCardClicked={props.onCardSelection}
+                term={card.term}
+                id={card.id}
+                key={card.id}
+              />
+            );
+          } else {
+            return;
+          }
         })}
       </>
     );
@@ -28,13 +35,13 @@ function CardList(props){
       <>
         <h3>Loading...</h3>
       </>
-    )
+    );
   }
 }
 
 CardList.propTypes = {
   // cardList: PropTypes.object,
-  onCardSelection: PropTypes.func
+  onCardSelection: PropTypes.func,
 };
 
 export default CardList;

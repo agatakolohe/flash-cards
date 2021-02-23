@@ -6,6 +6,7 @@ import EditCardForm from "./EditCardForm";
 import { connect } from "react-redux";
 import * as a from "../actions";
 import { withFirestore, isLoaded } from "react-redux-firebase";
+import * as firebaseui from "firebaseui";
 
 class CardControl extends React.Component {
   constructor(props) {
@@ -63,7 +64,9 @@ class CardControl extends React.Component {
   };
 
   render() {
-    const auth = this.props.firebase.auth();
+    const auth = firebaseui.auth.AuthUI(this.props.firebase.auth());
+    console.log(auth);
+    console.log(firebaseui.auth.AuthUI);
     if (!isLoaded(auth)) {
       return (
         <>
@@ -71,14 +74,14 @@ class CardControl extends React.Component {
         </>
       );
     }
-    if (isLoaded(auth) && auth.currentUser == null) {
+    if (isLoaded(auth) && auth == null) {
       return (
         <>
           <h1>You must be signed in to access the flash cards</h1>
         </>
       );
     }
-    if (isLoaded(auth) && auth.currentUser != null) {
+    if (isLoaded(auth) && auth != null) {
       // const uid = auth.currentUser.uid;
       let currentlyVisibleState = null;
       let buttonText = null;

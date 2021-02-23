@@ -2,11 +2,13 @@ import React from "react";
 import ReusableForm from "./ReusableForm";
 import PropTypes from "prop-types";
 import { useFirestore } from 'react-redux-firebase';
+// import firebase from "firebase/app";
 
 function EditCardForm (props) {
   const firestore = useFirestore();
   const { card } = props;
 
+  
   function handleEditCardFormSubmission(event) {
     event.preventDefault();
     props.onEditCard();
@@ -14,7 +16,8 @@ function EditCardForm (props) {
       term: event.target.term.value,
       definition: event.target.definition.value
     }
-    return firestore.update({collection: 'cards', doc: card.id}, propertiesToUpdate)
+     return firestore.update({collection: 'cards', doc: card.id}, propertiesToUpdate);
+   
   }
 
   return (

@@ -5,7 +5,8 @@ import CardDetail from './CardDetail';
 import EditCardForm from './EditCardForm';
 import { connect } from 'react-redux';
 import * as a from '../actions';
-import { withFirestore } from "react-redux-firebase";
+import { withFirestore, isLoaded } from 'react-redux-firebase';
+
 
 class CardControl extends React.Component {
 
@@ -64,33 +65,49 @@ class CardControl extends React.Component {
   }
 
   render(){
-    let currentlyVisibleState = null;
-    let buttonText = null;
-    if (this.state.editing ) {
-      currentlyVisibleState = <EditCardForm card = {this.state.selectedCard} onEditCard = {this.handleEditingCardInList} />
-      buttonText = "Return to Card List";
-    } else if (this.state.selectedCard != null) {
-      currentlyVisibleState =
-      <CardDetail
-        card = {this.state.selectedCard}
-        onClickingDelete = {this.handleDeletingCard}
-        onClickingEdit = {this.handleEditClick} />
-      buttonText = "Return to Card List";
-    } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState = <NewCardForm onNewCardCreation={this.handleAddingNewCardToList}  />;
-      buttonText = "Return to Card List";
-    } else {
-      currentlyVisibleState = <CardList cardList={this.props.masterCardList} onCardSelection={this.handleChangingSelectedCard} />;
-      buttonText = "Add Card";
+    const auth = this.props.firebase.auth();
+    if (!isLoaded(auth)) {
+      return (
+        <>
+          <h1>Loading...</h1>
+        </>
+      )
     }
-    return (
-      <React.Fragment>
-        {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button>
-      </React.Fragment>
-    );
+    if ((isLoaded(auth)) && (auth.currentUser == null)) {
+      return (
+        <>
+          <h1>You must be signed in to access the flash cards</h1>
+        </>
+      )
+    }
+    if ((isLoaded(auth)) && (auth.currentUser != null)) {
+      let currentlyVisibleState = null;
+      let buttonText = null;
+      if (this.state.editing ) {
+        currentlyVisibleState = <EditCardForm card = {this.state.selectedCard} onEditCard = {this.handleEditingCardInList} />
+        buttonText = "Return to Card List";
+      } else if (this.state.selectedCard != null) {
+        currentlyVisibleState =
+        <CardDetail
+          card = {this.state.selectedCard}
+          onClickingDelete = {this.handleDeletingCard}
+          onClickingEdit = {this.handleEditClick} />
+        buttonText = "Return to Card List";
+      } else if (this.props.formVisibleOnPage) {
+        currentlyVisibleState = <NewCardForm onNewCardCreation={this.handleAddingNewCardToList}  />;
+        buttonText = "Return to Card List";
+      } else {
+        currentlyVisibleState = <CardList cardList={this.props.masterCardList} onCardSelection={this.handleChangingSelectedCard} />;
+        buttonText = "Add Card";
+      }
+      return (
+        <React.Fragment>
+          {currentlyVisibleState}
+          <button onClick={this.handleClick}>{buttonText}</button>
+        </React.Fragment>
+      );
+    }
   }
-
 }
 
 const mapStateToProps = state => {

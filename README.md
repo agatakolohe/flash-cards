@@ -8,7 +8,6 @@
 
 App to store terms and definitions.
 
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### **Component Diagram**
@@ -36,14 +35,16 @@ None.
 To open the project on your local machine, you will need to download and install a code editor. The most popular choices are [Atom](https://atom.io/) and [Visual Studio Code](https://code.visualstudio.com/). Visual Studio Code is the code editor used to create this application.
 
 ### **Clone**
+
 1. Follow above steps to install necessary software.
 2. Open web browser and go to https://github.com/cschweig2/flash-cards.
 3. After clicking the green "code" button, you can copy the URL for the repository.
 4. Open a terminal window, such as Command Prompt or Git Bash, and navigate to the folder you wish to keep this project in.<br>
-  4a. Type in this command: `git clone` , followed by the URL you just copied. The full command should look like this: `git clone https://github.com/cschweig2/flash-cards` .
+   4a. Type in this command: `git clone` , followed by the URL you just copied. The full command should look like this: `git clone https://github.com/cschweig2/flash-cards` .
 5. View the code on your favorite text editor.
 
 ### **Download**
+
 1. Click [here](https://github.com/cschweig2/flash-cards) to view project repository.
 2. Click "Clone or download" to find the "Download ZIP" option.
 3. Click "Download ZIP" and extract files.
@@ -122,6 +123,8 @@ If you run into any issues, you can contact the creator at chelraebecker@gmail.c
 
 ## Legal
 
-*This software is licensed under the MIT license.*
+_This software is licensed under the MIT license._
 
 Copyright (c) 2021 **Chelsea Becker, Agata Kolodziej**
+
+After Lunch: create reducers to handle showing/hiding sign-in and sign-out components in header based on whether or not the user is logged in.

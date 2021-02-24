@@ -3,10 +3,13 @@ import NewCardForm from "./NewCardForm";
 import CardList from "./CardList";
 import CardDetail from "./CardDetail";
 import EditCardForm from "./EditCardForm";
+import SignOut from "./SignOut";
 import { connect } from "react-redux";
 import * as a from "../actions";
 import { withFirestore, isLoaded } from "react-redux-firebase";
 import * as firebaseui from "firebaseui";
+import firebase from "firebase/app";
+// import SignOut from "./SignOut";
 
 class CardControl extends React.Component {
   constructor(props) {
@@ -64,9 +67,10 @@ class CardControl extends React.Component {
   };
 
   render() {
-    const auth = firebaseui.auth.AuthUI(this.props.firebase.auth());
+    // const auth = firebaseui.auth.AuthUI.getInstance(this.props.firebase.auth());
+    const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
     console.log(auth);
-    console.log(firebaseui.auth.AuthUI);
+    console.log(firebase.auth.EmailAuthProvider.PROVIDER_ID);
     if (!isLoaded(auth)) {
       return (
         <>
@@ -108,12 +112,15 @@ class CardControl extends React.Component {
         );
         buttonText = "Return to Card List";
       } else {
-        currentlyVisibleState = (
-          <CardList
-            cardList={this.props.masterCardList}
-            onCardSelection={this.handleChangingSelectedCard}
-          />
-        );
+        currentlyVisibleState =
+          ((
+            <CardList
+              cardList={this.props.masterCardList}
+              onCardSelection={this.handleChangingSelectedCard}
+            />
+          ),
+          (<SignOut />));
+
         buttonText = "Add Card";
       }
       return (

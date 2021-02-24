@@ -4,20 +4,24 @@ import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 
 function Header() {
-  const { isAuthenticated } = useState(null);
-
+  // const [boolState, isSignedOut] = useState(true);
+  const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
+  const [boolState, isSignedOut] = useState(auth);
+  // if (auth != null) {
+  //   isSignedOut(!boolState);
+  // }
   const handleLogout = (event) => {
     event.preventDefault();
     firebase
       .auth()
       .signOut()
       .then(function () {
+        isSignedOut(boolState === null);
         console.log("success sign out");
       })
       .catch(function (error) {
         console.log(error.message);
       });
-    console.log("logout successful");
   };
   return (
     <>
@@ -26,9 +30,9 @@ function Header() {
         <li>
           <Link to="/">Home</Link>
         </li>
-        {isAuthenticated ? (
+        {boolState ? (
           <>
-            <Link onClick={handleLogout} to="/">
+            <Link onClick={handleLogout} to="/signin">
               Logout
             </Link>
           </>

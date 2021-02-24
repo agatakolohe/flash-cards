@@ -81,6 +81,7 @@ class CardControl extends React.Component {
     if (isLoaded(auth) && auth == null) {
       return (
         <>
+          {/* //how signup and sign in */}
           <h1>You must be signed in to access the flash cards</h1>
         </>
       );
@@ -112,14 +113,12 @@ class CardControl extends React.Component {
         );
         buttonText = "Return to Card List";
       } else {
-        currentlyVisibleState =
-          ((
-            <CardList
-              cardList={this.props.masterCardList}
-              onCardSelection={this.handleChangingSelectedCard}
-            />
-          ),
-          (<SignOut />));
+        currentlyVisibleState = (
+          <CardList
+            cardList={this.props.masterCardList}
+            onCardSelection={this.handleChangingSelectedCard}
+          />
+        );
 
         buttonText = "Add Card";
       }

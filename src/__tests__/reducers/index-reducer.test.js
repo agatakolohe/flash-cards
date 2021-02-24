@@ -1,27 +1,30 @@
-import rootReducer from '../../reducers/index';
-import formVisibleReducer from '../../reducers/form-visible-reducer';
-import cardListReducer from '../../reducers/card-list-reducer';
-import { createStore } from 'redux';
-import * as c from './../../actions/ActionTypes';
+import rootReducer from "../../reducers/index";
+import formVisibleReducer from "../../reducers/form-visible-reducer";
+import cardListReducer from "../../reducers/card-list-reducer";
+import { createStore } from "redux";
+import * as c from "./../../actions/ActionTypes";
 
 let store = createStore(rootReducer);
 
 describe("rootReducer", () => {
-
-  test('Should return default state if no action type is recognized', () => {
+  test("Should return default state if no action type is recognized", () => {
     expect(rootReducer({}, { type: null })).toMatchObject({
       masterCardList: {},
       formVisibleOnPage: false,
-      firestore: {}
+      firestore: {},
     });
   });
 
-  test('Check that initial state of cardListReducer matches root reducer', () => {
-    expect(store.getState().masterCardList).toEqual(cardListReducer(undefined, { type: null }));
+  test("Check that initial state of cardListReducer matches root reducer", () => {
+    expect(store.getState().masterCardList).toEqual(
+      cardListReducer(undefined, { type: null })
+    );
   });
 
-  test('Check that initial state of formVisibleReducer matches root reducer', () => {
-    expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, { type: null }));
+  test("Check that initial state of formVisibleReducer matches root reducer", () => {
+    expect(store.getState().formVisibleOnPage).toEqual(
+      formVisibleReducer(undefined, { type: null })
+    );
   });
 
   // test('Check that initial state of cardListReducer matches root reducer', () => {
@@ -35,12 +38,13 @@ describe("rootReducer", () => {
   //   expect(store.getState().masterCardList).toEqual(cardListReducer(undefined, action));
   // });
 
-  test('Check that initial state of formVisibleReducer matches root reducer', () => {
+  test("Check that initial state of formVisibleReducer matches root reducer", () => {
     const action = {
-      type: c.TOGGLE_FORM
-    }
+      type: c.TOGGLE_FORM,
+    };
     store.dispatch(action);
-    expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, action));
+    expect(store.getState().formVisibleOnPage).toEqual(
+      formVisibleReducer(undefined, action)
+    );
   });
-
 });

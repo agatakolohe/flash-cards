@@ -4,14 +4,27 @@ import Card from "./Card";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded } from "react-redux-firebase";
 import firebase from "firebase/app";
+import { useHistory } from "react-router-dom";
 
 function CardList(props) {
   useFirestoreConnect([{ collection: "cards" }]);
 
   const cards = useSelector((state) => state.firestore.ordered.cards);
   const user = firebase.auth().currentUser;
+  // const user = firebase.auth.EmailAuthProvider.PROVIDER_ID;
 
-  if (isLoaded(cards)) {
+  const history = useHistory();
+  function navigateToHome() {
+    history.push("/");
+  }
+
+  if (user === null) {
+    return (
+      <>
+        <h1>for the love of god work</h1>
+      </>
+    );
+  } else if (isLoaded(cards) && user.uid != null) {
     return (
       <>
         {cards.map((card) => {
@@ -24,8 +37,6 @@ function CardList(props) {
                 key={card.id}
               />
             );
-          } else {
-            return;
           }
         })}
       </>

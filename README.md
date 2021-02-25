@@ -127,4 +127,11 @@ _This software is licensed under the MIT license._
 
 Copyright (c) 2021 **Chelsea Becker, Agata Kolodziej**
 
-After Lunch: create reducers to handle showing/hiding sign-in and sign-out components in header based on whether or not the user is logged in.
+<!-- useEffect(() => {
+    let ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start("#firebaseui-auth-container", uiConfig);
+    return () => {
+      ui.delete();
+    };
+  }, []); -->
+  <!-- https://stackoverflow.com/questions/39736739/reactjs-app-authentication-firebasefirebaseui-uncaught-error-firebase-app-nam -->

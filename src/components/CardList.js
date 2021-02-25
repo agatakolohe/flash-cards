@@ -15,13 +15,14 @@ function CardList(props) {
 
   const history = useHistory();
   function navigateToHome() {
-    history.push("/");
+    history.push("/signin");
   }
 
   if (user === null) {
     return (
       <>
-        <h1>for the love of god work</h1>
+        <h1>You must log in to view flash cards</h1>
+        <button onClick={navigateToHome}>Click To Go Home</button>
       </>
     );
   } else if (isLoaded(cards) && user.uid != null) {

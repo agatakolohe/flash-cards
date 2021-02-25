@@ -17,6 +17,7 @@ function Header() {
       .signOut()
       .then(function () {
         isSignedOut(boolState === null);
+
         console.log("success sign out");
       })
       .catch(function (error) {
@@ -39,7 +40,7 @@ function Header() {
         ) : (
           <>
             <Link to="/signin">Sign In</Link>
-            <Link to="/signup">Sign Up</Link>
+            {/* <Link to="/signup">Sign Up</Link> */}
           </>
         )}
       </ul>

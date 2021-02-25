@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { doSignOut } from "./SignOut";
 import firebase from "firebase/app";
+import PropTypes from "prop-types";
 
-function Header() {
+function Header(props) {
   // const [boolState, isSignedOut] = useState(true);
   const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
   const [boolState, isSignedOut] = useState(auth);
   // if (auth != null) {
   //   isSignedOut(!boolState);
   // }
-  const handleLogout = (event) => {
-    event.preventDefault();
+  const handleLogout = () => {
     firebase
       .auth()
       .signOut()
@@ -23,6 +23,7 @@ function Header() {
       .catch(function (error) {
         console.log(error.message);
       });
+    props.onUserLogin();
   };
   return (
     <>
@@ -48,4 +49,7 @@ function Header() {
   );
 }
 
+Header.propTypes = {
+  onUserLogin: PropTypes.func,
+};
 export default Header;

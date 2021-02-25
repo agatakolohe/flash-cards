@@ -3,7 +3,7 @@ import NewCardForm from "./NewCardForm";
 import CardList from "./CardList";
 import CardDetail from "./CardDetail";
 import EditCardForm from "./EditCardForm";
-import SignOut from "./SignOut";
+import Header from "./Header";
 import { connect } from "react-redux";
 import * as a from "../actions";
 import { withFirestore, isLoaded } from "react-redux-firebase";
@@ -66,6 +66,12 @@ class CardControl extends React.Component {
     this.setState({ selectedCard: null });
   };
 
+  handleUserLogin = () => {
+    const { dispatch } = this.props;
+    const action = a.toggleLogin();
+    dispatch(action);
+  };
+
   render() {
     // const auth = firebaseui.auth.AuthUI.getInstance(this.props.firebase.auth());
     const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
@@ -124,6 +130,7 @@ class CardControl extends React.Component {
       }
       return (
         <React.Fragment>
+          <Header onUserLogin={this.handleUserLogin} />
           {currentlyVisibleState}
           <button onClick={this.handleClick}>{buttonText}</button>
         </React.Fragment>

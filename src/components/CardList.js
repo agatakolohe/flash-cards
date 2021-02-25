@@ -22,7 +22,7 @@ function CardList(props) {
     return (
       <>
         <h1>You must log in to view flash cards</h1>
-        <button onClick={navigateToHome}>Click To Go Home</button>
+        <button onClick={navigateToHome}>Click To Sign In</button>
       </>
     );
   } else if (isLoaded(cards) && user.uid != null) {

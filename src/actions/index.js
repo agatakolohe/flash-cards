@@ -1,12 +1,16 @@
-import * as c from './ActionTypes';
+import * as c from "./ActionTypes";
 
-export const deleteCard = id => ({
+export const deleteCard = (id) => ({
   type: c.DELETE_CARD,
-  id
+  id,
 });
 
 export const toggleForm = () => ({
-  type: c.TOGGLE_FORM
+  type: c.TOGGLE_FORM,
+});
+
+export const toggleLogin = () => ({
+  type: c.TOGGLE_LOGIN,
 });
 
 // export const addCard = (card) => {

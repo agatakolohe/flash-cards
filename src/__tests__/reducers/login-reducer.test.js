@@ -6,7 +6,7 @@ describe("loginReducer", () => {
     expect(loginReducer(undefined, { type: null })).toEqual(false);
   });
 
-  // test('Should toggle form login state to true', () => {
-  //   expect(loginReducer(undefined, { type: c.TOGGLE_LOGIN })).toEqual(true);
-  // });
+  test("Should toggle form login state to true", () => {
+    expect(loginReducer(undefined, { type: c.TOGGLE_LOGIN })).toEqual(true);
+  });
 });

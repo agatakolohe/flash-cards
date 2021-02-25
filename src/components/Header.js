@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useSelector } from "react";
 import { Link } from "react-router-dom";
 // import { doSignOut } from "./SignOut";
 import firebase from "firebase/app";
 import PropTypes from "prop-types";
+import { toggleLogin } from "../actions";
 
 function Header(props) {
   // const [boolState, isSignedOut] = useState(true);
-  const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
-  const [boolState, isSignedOut] = useState(auth);
-  // if (auth != null) {
-  //   isSignedOut(!boolState);
-  // }
+  // const auth = firebase.auth.EmailAuthProvider.PROVIDER_ID;
+  let [boolState, isSignedIn] = useState();
+  // console.log(boolState);
+
+  const userState = useSelector((state) => state.login);
+
+  console.log(userState);
   const handleLogout = () => {
     firebase
       .auth()
       .signOut()
       .then(function () {
-        isSignedOut(boolState === null);
+        isSignedIn((boolState = false));
 
         console.log("success sign out");
       })
@@ -35,7 +38,7 @@ function Header(props) {
         {boolState ? (
           <>
             <Link onClick={handleLogout} to="/signin">
-              Logout
+              Sign Out
             </Link>
           </>
         ) : (
@@ -52,4 +55,5 @@ function Header(props) {
 Header.propTypes = {
   onUserLogin: PropTypes.func,
 };
+
 export default Header;

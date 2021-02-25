@@ -142,6 +142,7 @@ class CardControl extends React.Component {
 const mapStateToProps = (state) => {
   return {
     formVisibleOnPage: state.formVisibleOnPage,
+    login: state.login,
   };
 };
 
